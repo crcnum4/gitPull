@@ -14,4 +14,17 @@ router.get("/", (req, res) => {
     res.send("Welcome to the route of our application");
 });
 
+router.post("/", async(req, res) => {
+    const person = new Person({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    });
+    try {
+        const newPerson = await person.save();
+        res.status(201).json(newPerson);
+    } catch (err) {
+        res.status(400).json({message : err.message});
+    }
+});
+
 module.exports = router;
